@@ -18,13 +18,13 @@ export default function Navbar() {
   if (!isLogged) {
     return (
       <>
-        <nav className="flex justify-between">
-          <Link href={"/diary"}>My Diary</Link>
-          <div>
-            <Link className="m-2" href={"/signup"}>
+        <nav className="flex justify-between py-3 bg-black">
+          <Link href={"/diary"} className=" p-1 px-2 bg-indigo-900 text-white rounded-sm" >My Diary</Link>
+          <div className="p-1">
+            <Link className="mx-1 p-[6px] px-2 bg-indigo-900 text-white rounded-sm" href={"/signup"}>
               Signup
             </Link>
-            <Link className="m-2" href={"/signin"}>
+            <Link className="mx-1 p-[6px] px-2 bg-indigo-900 text-white rounded-sm" href={"/signin"}>
               Login
             </Link>
           </div>
@@ -34,9 +34,9 @@ export default function Navbar() {
   } else {
     return (
       <>
-        <nav className="flex justify-between">
-          <Link href={"/diary"}>My Diary</Link>
-          <button onClick={clear}>Logout</button>
+        <nav className="flex justify-between py-3 bg-black">
+          <Link href={"/diary"} className=" p-1 px-2 bg-indigo-900 text-white rounded-sm" >My Diary</Link>
+          <button onClick={clear} className="mx-1 p-1 px-2 bg-indigo-900 text-white rounded-sm">Logout</button>
         </nav>
       </>
     );

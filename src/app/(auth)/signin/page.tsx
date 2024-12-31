@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+
 export default function SigninPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -38,8 +39,8 @@ export default function SigninPage() {
   }
 
   return (
-    <div className="h-screen bg-blue-500 flex items-center justify-center">
-      <div className="bg-white w-[400px] h-[400px] rounded-2xl flex flex-col justify-between py-16 px-10 shadow-2xl">
+    <div className="h-screen bg-blue-500 flex items-center justify-center ">
+      <div className="bg-white w-[400px] h-[400px] rounded-2xl flex flex-col  strok justify-between py-16 px-10 shadow-2xl">
         <div>
           <h1 className="text-3xl">Login Page</h1>
           <p className="mt-2 text-white">
