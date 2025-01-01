@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
       message: "User signed up successfully",
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return NextResponse.json({
       message: "Signup failed",
     });

@@ -1,9 +1,11 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
+import { Calendar } from "@/components/ui/calendar";
 
 export default function Page() {
   const [content, setContent] = useState<string>("");
   const textRef = useRef<HTMLTextAreaElement>(null);
+  const [date, setDate] = useState<Date | undefined>(new Date());
 
   const [token, setToken] = useState<string | null>(null);
 
@@ -50,6 +52,13 @@ export default function Page() {
     <>
       <div className="bg-blue-500 h-[calc(100vh-56px)] flex justify-between">
         <div className="bg-slate-300 w-[300px] h-[80%] ml-4 mt-4">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            className="rounded-md border"
+          />
+          <div>{date?.toString()}</div>
         </div>
         <div className="flex-col w-[1100px] h-auto mr-2 mt-2">
           <textarea

@@ -2,11 +2,10 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-
 export default function SigninPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter()
+  const router = useRouter();
 
   async function Submit() {
     const backend = `/api/v1/user/signin`;
@@ -25,11 +24,10 @@ export default function SigninPage() {
     });
     const data = await response.json();
     if (data.token) {
-      console.log("Helow")
+      console.log("Helow");
       localStorage.setItem("token", data.token);
-      console.log("Helow")
-      router.push("/diary")
-
+      console.log("Helow");
+      router.push("/diary");
     } else {
       console.log("token not present");
     }
