@@ -32,5 +32,5 @@ export async function middleware(req: NextRequest) {
   }
 }
 export const config = {
-  matcher: "/api/v1/diary/create",
+  matcher: ["/api/v1/diary/create", "/api/v1/diary/get"],
 };

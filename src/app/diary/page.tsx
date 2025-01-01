@@ -5,9 +5,10 @@ import { Calendar } from "@/components/ui/calendar";
 export default function Page() {
   const [content, setContent] = useState<string>("");
   const textRef = useRef<HTMLTextAreaElement>(null);
-  const [date, setDate] = useState<Date | undefined>(new Date());
-
-  const [token, setToken] = useState<string | null>(null);
+  const [date, setDate] = useState<Date>(new Date());
+  const [diaryPreviews, setDiaryPreviews] = useState<string[]>(["hh"]);
+  const [token, setToken] = useState<string | null>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     //need to do this shit cause nextjs sucks
@@ -15,6 +16,46 @@ export default function Page() {
       setToken(localStorage.getItem("token"));
     }
   }, []);
+  useEffect(() => {
+    if (token) {
+      async function fetchData() {
+        console.log(token);
+        console.log(date);
+        const res = await fetch("/api/v1/diary/get", {
+          method: "POST",
+          headers: {
+            token: token as string,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            date,
+          }),
+        });
+        const data = await res.json();
+        console.log(data);
+        if (data) {
+          setDiaryPreviews(data.content);
+        } else {
+          setDiaryPreviews(["No previous entries present"]);
+        }
+        setLoading(false);
+      }
+      fetchData();
+    }
+    // fetch('/api/v1/diary/get', {
+    //   method: "POST"
+    // })
+    //   .then(res => res.json())
+    //   .then((data) => {
+    //     if (data) {
+    //       setDiaryPreviews(data.content)
+    //     } else {
+    //       setDiaryPreviews(["No previous entries present"])
+    //     }
+    //   }
+    //   )
+    console.log(diaryPreviews);
+  }, [date, token]);
 
   if (!token) {
     return <div>You are unauthorized</div>;
@@ -48,6 +89,10 @@ export default function Page() {
       }, 500);
     }
   }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <div className="bg-blue-500 h-[calc(100vh-56px)] flex justify-between">
@@ -55,10 +100,19 @@ export default function Page() {
           <Calendar
             mode="single"
             selected={date}
-            onSelect={setDate}
+            onSelect={(date) => {
+              if (date) {
+                setDate(date);
+              }
+            }}
             className="rounded-md border"
           />
-          <div>{date?.toString()}</div>
+          <div>{date?.toLocaleString()}</div>
+          <div>
+            {diaryPreviews.map((value, index) => (
+              <div key={index}>{value.substring(0, 10)}</div>
+            ))}
+          </div>
         </div>
         <div className="flex-col w-[1100px] h-auto mr-2 mt-2">
           <textarea
