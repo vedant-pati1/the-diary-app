@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState,useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export default function Page() {
   const [content, setContent] = useState<string>("");
@@ -48,16 +48,18 @@ export default function Page() {
   }
   return (
     <>
-      <div className="bg-blue-500 h-svh flex justify-center items-center">
-        <div className="flex flex-col justify-center items-center border -2 border-black">
+      <div className="bg-blue-500 h-[calc(100vh-56px)] flex justify-between">
+        <div className="bg-slate-300 w-[300px] h-[80%] ml-4 mt-4">
+        </div>
+        <div className="flex-col w-[1100px] h-auto mr-2 mt-2">
           <textarea
             value={content}
             ref={textRef}
-            className=" bg-slate-300 rounded-sm w-[700px] h-[400px] p-2 shadow-xl"
+            className=" bg-slate-300 rounded-sm w-full h-[80%] p-2 shadow-xl "
             name="mainContent"
             onChange={handler}
           ></textarea>
-          <div className="flex flex-row-reverse w-[700px] bg-blue-600">
+          <div className="flex flex-row-reverse w-full bg-blue-600">
             <button className="m-2 mt-3 px-2 bg-black text-white rounded-sm w-16 h-8 shadow-lg">
               Edit
             </button>

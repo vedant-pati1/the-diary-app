@@ -13,7 +13,7 @@ export default function Home() {
       //later on add logic of going to /diary only for the first time
       //when it link is click then onwards / should exist as a separate page.
 
-      // router.push('/diary')
+      router.push('/diary')
     }
   },[])
 

@@ -2,7 +2,9 @@ import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
 const prisma = new PrismaClient();
+
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const username = body.username;
