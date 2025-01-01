@@ -20,7 +20,9 @@ export async function POST(req: NextRequest) {
     const result = await bcrypt.compare(password, user.password);
     if (result) {
       if (!process.env.JWT_SECRET) {
-        new Error("JWT_SECRET not present");
+      return NextResponse.json({
+        message:"issue with JWT_SECRET"
+      })
       } else {
         const token = jwt.sign({ username }, process.env.JWT_SECRET);
         return NextResponse.json({
