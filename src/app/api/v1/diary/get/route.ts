@@ -4,7 +4,9 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 export async function POST(req: NextRequest) {
   const body = await req.json();
+  console.log(body);
   const bodyDate = new Date(body.date);
+  console.log(bodyDate);
   const username = req.headers.get("username");
 
   if (username == null) {
@@ -12,46 +14,45 @@ export async function POST(req: NextRequest) {
       message: "username not defined",
     });
   }
-  const user = await prisma.user.findFirst({
-    where: {
-      username,
-    },
-    include: {
-      //add a raw query to get diary entries on the basis of date
-      diary: true,
-    },
-  });
-  console.log(user);
-  if (user) {
-    console.log(user.diary);
-    console.log(typeof body.date);
-    let filteredDiary = user.diary.map((diary) => {
-      //bad way to do it use a SQL query above instead
-      console.log(diary.Date.getDay());
-      console.log(bodyDate.getDay());
-      console.log(diary.Date.getMonth());
-      console.log(bodyDate.getMonth());
-      console.log(diary.Date.getFullYear());
-      console.log(bodyDate.getFullYear());
-      if (
-        diary.Date.getDay() === bodyDate.getDay() &&
-        diary.Date.getMonth() === bodyDate.getMonth() &&
-        diary.Date.getFullYear() === bodyDate.getFullYear()
-      ) {
-        return diary.Content;
-      } else {
-        return undefined;
-      }
+  console.log("how you doin");
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        username,
+      },
+      include: {
+        //add a raw query to get diary entries on the basis of date
+        diary: true,
+      },
     });
-    console.log(filteredDiary);
-    filteredDiary = filteredDiary.filter((content) => content !== undefined);
-    console.log(filteredDiary);
+
+    console.log("how you doin");
+    if (user) {
+      let filteredDiary = user.diary.map((diary) => {
+        //bad way to do it use a SQL query above instead
+        if (
+          diary.Date.getDay() === bodyDate.getDay() &&
+          diary.Date.getMonth() === bodyDate.getMonth() &&
+          diary.Date.getFullYear() === bodyDate.getFullYear()
+        ) {
+          return diary.Content;
+        } else {
+          return undefined;
+        }
+      });
+      filteredDiary = filteredDiary.filter((content) => content !== undefined);
+      return NextResponse.json({
+        content: filteredDiary,
+      });
+    } else {
+      return NextResponse.json({
+        message: "user not found",
+      });
+    }
+  } catch (e) {
+    console.log(e);
     return NextResponse.json({
-      content: filteredDiary,
-    });
-  } else {
-    return NextResponse.json({
-      message: "user not found",
+      message: "problem with the database",
     });
   }
 }
