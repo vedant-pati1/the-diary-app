@@ -17,8 +17,9 @@ jobs:
                 key: ${{secrets.KEY}}
                 port: 22
                 script: |
-                    git clone https://github.com/vedant-pati1/the-diary-app.git
+                    ls
                     cd the-diary-app/
+                    ls
                     npm install -g pnpm
                     pnpm install
                     npx prisma generate
