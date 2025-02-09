@@ -17,5 +17,8 @@ jobs:
                 key: ${{secrets.KEY}}
                 port: 22
                 script: |
-                    whoami
-                    pwd
+                    pnpm install
+                    npx prisma generate
+                    pnpm run build
+                    pnpm run start 
+                    
