@@ -1,0 +1,20 @@
+name: Testing the commit
+on:
+    push:
+        branches: [main]
+
+jobs: 
+    build:
+        run-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              name: check out repo
+            - uses: appleboy/ssh-action@v1.2.0
+              with:
+                host: ${{secrets.HOST}}
+                username: ubuntu
+                key: ${{secrets.KEY}}
+                port: 22
+                script: |
+                whoami
+                pwd
