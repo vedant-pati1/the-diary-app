@@ -20,7 +20,7 @@ jobs:
                     ls
                     cd the-diary-app/
                     ls
-                    npm install -g pnpm
+                    sudo npm install -g pnpm
                     pnpm install
                     npx prisma generate
                     pnpm run build
