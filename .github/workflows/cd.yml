@@ -17,6 +17,7 @@ jobs:
                 key: ${{secrets.KEY}}
                 port: 22
                 script: |
+                    npm install -g pnpm
                     pnpm install
                     npx prisma generate
                     pnpm run build
